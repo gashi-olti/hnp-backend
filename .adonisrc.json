@@ -1,0 +1,72 @@
+{
+  "typescript": true,
+  "commands": [
+    "./commands",
+    "@adonisjs/core/build/commands",
+    "@adonisjs/repl/build/commands",
+    "@adonisjs/lucid/build/commands",
+    "@adonisjs/mail/build/commands",
+    "@adonisjs/bouncer/build/commands"
+  ],
+  "exceptionHandlerNamespace": "App/Exceptions/Handler",
+  "aliases": {
+    "App": "app",
+    "Config": "config",
+    "Database": "database",
+    "Contracts": "contracts",
+    "Custom": "custom",
+    "Utils": "utils"
+  },
+  "preloads": [
+    "./start/routes",
+    "./start/kernel",
+    {
+      "file": "./custom/validatorRules",
+      "environment": ["web"]
+    },
+    {
+      "file": "./start/events",
+      "environment": ["web"]
+    },
+    {
+      "file": "./start/sns-subscriptions",
+      "environment": ["web"]
+    },
+    "./start/bouncer"
+  ],
+  "providers": [
+    "./providers/AppProvider",
+    "@adonisjs/core",
+    "@adonisjs/lucid",
+    "@adonisjs/auth",
+    "./providers/I18nNextProvider",
+    "./providers/StripeProvider",
+    "@adonisjs/auth",
+    "@adonisjs/mail",
+    "@adonisjs/view",
+    "@adonisjs/bouncer"
+  ],
+  "aceProviders": ["@adonisjs/repl"],
+  "metaFiles": [
+    {
+      "pattern": "locales/**/*.json",
+      "reloadServer": true
+    },
+    {
+      "pattern": "resources/views/**/*.edge",
+      "reloadServer": false
+    },
+    {
+      "pattern": "public/**/*",
+      "reloadServer": false
+    },
+    {
+      "pattern": "resources/images/**/*",
+      "reloadServer": false
+    },
+    {
+      "pattern": "resources/pdf-templates/**/*",
+      "reloadServer": false
+    }
+  ]
+}

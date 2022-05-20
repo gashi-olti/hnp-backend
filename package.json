@@ -1,0 +1,97 @@
+{
+  "name": "hnp-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node ace build --production",
+    "start": "ENV_SILENT=true node server.js >> application.log",
+    "stripe:listen": "stripe listen --forward-to https://api.my-ticket.local:3333/direct/webhook --forward-connect-to https://api.my-ticket.local:3333/connect/webhook",
+    "dev": "ENABLE_HTTPS=true node ace serve --watch",
+    "lint": "eslint . --ext=.ts",
+    "format": "prettier --write .",
+    "lint:fix": "npm run lint --fix",
+    "cert": "mkcert -cert-file ./.keys/local.crt -key-file ./.keys/local.key '*.my-ticket.local' localhost 127.0.0.1",
+    "prepare": "husky install"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:adonis/typescriptApp",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "build"
+  ],
+  "devDependencies": {
+    "@adonisjs/assembler": "^5.6.2",
+    "@japa/preset-adonis": "^1.0.16",
+    "@japa/runner": "^2.0.8",
+    "@types/html-to-text": "^8.0.1",
+    "@types/mime-types": "^2.1.1",
+    "@types/mjml": "^4.7.0",
+    "@types/qrcode": "^1.4.1",
+    "@types/sharp": "^0.28.5",
+    "@types/uuid": "^8.3.1",
+    "adonis-preset-ts": "^2.1.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-adonis": "^2.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^1.1.1",
+    "husky": "^6.0.0",
+    "jira-prepare-commit-msg": "^1.6.0",
+    "lint-staged": "^11.0.0",
+    "pino-pretty": "^7.6.1",
+    "prettier": "^2.6.2",
+    "typescript": "~4.6",
+    "youch": "^3.2.0",
+    "youch-terminal": "^2.1.4"
+  },
+  "dependencies": {
+    "@adonisjs/core": "^5.6.0",
+    "@adonisjs/repl": "^3.1.0",
+    "@adonisjs/auth": "^8.0.6",
+    "@adonisjs/bouncer": "^2.2.5",
+    "@adonisjs/lucid": "^16.0.0",
+    "@adonisjs/mail": "^7.2.1",
+    "@adonisjs/view": "^6.0.3",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "axios": "^0.24.0",
+    "exceljs": "^4.3.0",
+    "hashids": "^2.2.10",
+    "html-to-text": "^8.0.0",
+    "i18n-iso-countries": "^7.1.0",
+    "i18next": "^20.3.1",
+    "i18next-fs-backend": "^1.1.1",
+    "isomorphic-dompurify": "^0.18.0",
+    "luxon": "^2.1.1",
+    "mjml": "^4.10.1",
+    "pdf-lib": "^1.17.0",
+    "pg": "^8.6.0",
+    "phc-argon2": "^1.1.1",
+    "postal-codes-json-xml-csv": "https://github.com/zauberware/postal-codes-json-xml-csv.git",
+    "qrcode": "^1.4.4",
+    "sharp": "^0.29.0",
+    "stripe": "^8.156.0",
+    "uuid": "^8.3.2",
+    "proxy-addr": "^2.0.7",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.21"
+  },
+  "jira-prepare-commit-msg": {
+    "messagePattern": "$J: $M",
+    "isConventionalCommit": true
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.{ts, json, md}": "prettier --write"
+  }
+}
