@@ -9,20 +9,5 @@
       "warn",
       { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
     ]
-  },
-  "overrides": [{
-    "files": "**/*.ts",
-    // TypeScript-only configuration
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "tsconfig.json",
-      "tsconfigRootDir": "__dirname",
-      "sourceType": "module"
-    },
-    "plugins": ["@typescript-eslint"],
-    "rules": {
-      "@typescript-eslint/no-floating-promises": "error"
-      // ...
-    }
-  }]
+  }
 }
