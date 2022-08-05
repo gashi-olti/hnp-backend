@@ -1,5 +1,5 @@
 import Env from '@ioc:Adonis/Core/Env'
-import stripe from '@ioc:Mts/Stripe'
+import stripe from '@ioc:Hnp/Stripe'
 import Company from 'App/Models/Company'
 
 export default class StripeService {
