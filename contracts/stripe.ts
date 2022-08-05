@@ -1,4 +1,4 @@
-declare module '@ioc:Mts/Stripe' {
+declare module '@ioc:Hnp/Stripe' {
   import Stripe from 'stripe'
 
   export interface StripeConfig {
