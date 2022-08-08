@@ -3,6 +3,7 @@ import { BaseModel, column, hasOne, HasOne, computed, afterFind } from '@ioc:Ado
 
 import Subscription from './Subscription'
 import { getSlug } from 'Utils/utils'
+import StripeService from 'App/Services/StripeService'
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true, serializeAs: null })
