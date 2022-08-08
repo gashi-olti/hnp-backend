@@ -1,14 +1,27 @@
 declare module '@ioc:Adonis/Addons/Hnp' {
+  interface JobPosition {
+    name: string
+  }
+
   interface DataList {
     id: number
+    category: string
+    job_position?: JobPosition[]
+  }
+
+  interface City {
     name: string
-    category?: string
-    country?: string
+  }
+
+  interface CountriesList {
+    country_code: string
+    country_name: string
+    cities: City[]
   }
 
   interface HnpConfig {
     jobTypes: DataList[]
     jobPositionTypes: DataList[]
-    cities: DataList[]
+    locations: CountriesList[]
   }
 }
