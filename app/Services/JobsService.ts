@@ -25,8 +25,8 @@ export default class JobsService {
     }
   }
 
-  public async getCities() {
-    const cities: HnpConfig['cities'] = Config.get('hnp.cities')
+  public async getLocations() {
+    const cities: HnpConfig['locations'] = Config.get('hnp.locations')
     try {
       return cities
     } catch (err) {

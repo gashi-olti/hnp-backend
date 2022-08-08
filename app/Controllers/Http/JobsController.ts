@@ -11,7 +11,7 @@ export default class JobsController {
     return jobsService.getJobPositionTypes()
   }
 
-  public async getCities() {
-    return jobsService.getCities()
+  public async getLocations() {
+    return jobsService.getLocations()
   }
 }
