@@ -18,5 +18,5 @@
 |
 */
 
-import './routes/auth'
+// import './routes/auth'
 import './routes/jobs'
