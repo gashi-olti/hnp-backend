@@ -13,7 +13,7 @@ import {
 import Database from '@ioc:Adonis/Lucid/Database'
 import Company from './Company'
 
-enum ProfileTypes {
+export enum ProfileTypes {
   company = 1,
   admin,
 }
