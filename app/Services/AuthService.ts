@@ -1,4 +1,4 @@
-import User from 'App/Models/User'
+import User, { ProfileTypes } from 'App/Models/User'
 import Admin from 'App/Models/Admin'
 import { AuthContract, GuardsList } from '@ioc:Adonis/Addons/Auth'
 import { AdminLoginValidator, LoginValidator } from 'App/Validators/LoginValidator'
@@ -58,6 +58,10 @@ export default class AuthService {
         changedEmail: user?.changedEmail || undefined,
       }),
       allowedProfiles: user?.allowedProfiles,
+      ...(user instanceof Admin && {
+        isAdmin:
+          user?.allowedProfiles?.length === 1 && user.allowedProfiles[0] === ProfileTypes.admin,
+      }),
     }
   }
 }
