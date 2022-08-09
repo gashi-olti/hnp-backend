@@ -15,9 +15,32 @@
 
 import Logger from '@ioc:Adonis/Core/Logger'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import i18next from '@ioc:I18n/Next'
+
+export interface ResponseInterface {
+  message: string | null
+  errors: { field: string; message: string }[]
+  data: any
+}
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   constructor() {
     super(Logger)
+  }
+
+  public async handle(error: any, ctx: HttpContextContract) {
+    if (error.code === 'E_ROW_NOT_FOUND' || error.code === '22P02') {
+      error.message = i18next.t('common:not found')
+    }
+
+    if (error.code === 'E_INVALID_AUTH_PASSWORD') {
+      error.messages = {
+        errors: [{ message: i18next.t('validation:invalid credentials') }],
+      }
+
+      return ctx.response.status(400).send(error.messages)
+    }
+    return super.handle(error, ctx)
   }
 }
