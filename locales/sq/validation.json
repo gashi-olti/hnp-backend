@@ -1,5 +1,8 @@
 {
+  "email": "Ju lutemi shkruani një email adresë të vlefshme",
+  "email exists": "Kjo email adresë veçse është në përdorim",
   "required": "Kjo është një fushë e detyrueshme",
+  "confirm password": "Fjalëkalimet nuk përputhen",
   "url invalid": "Ju lutemi shkruani një URL të vlefshme",
   "maxlength": "Fusha nuk mund të përmbajë më shumë se {{ options.maxLength }} karaktere.",
   "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj"
