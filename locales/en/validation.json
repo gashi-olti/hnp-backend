@@ -1,0 +1,6 @@
+{
+  "required": "This is a required field",
+  "url invalid": "Please enter a valid URL",
+  "maxlength": "The input cannot be longer than {{ options.maxLength }} characters.",
+  "max items": "Maximum of {{ options.maxLength }} items allowed"
+}

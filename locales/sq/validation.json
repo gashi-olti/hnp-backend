@@ -1,0 +1,6 @@
+{
+  "required": "Kjo është një fushë e detyrueshme",
+  "url invalid": "Ju lutemi shkruani një URL të vlefshme",
+  "maxlength": "Fusha nuk mund të përmbajë më shumë se {{ options.maxLength }} karaktere.",
+  "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj"
+}
