@@ -20,3 +20,4 @@
 
 import './routes/auth'
 import './routes/jobs'
+import './routes/users'
