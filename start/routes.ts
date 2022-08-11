@@ -18,6 +18,8 @@
 |
 */
 
+import './routes/default'
 import './routes/auth'
 import './routes/jobs'
 import './routes/users'
+import './routes/companies'
