@@ -5,12 +5,11 @@
   "scripts": {
     "build": "node ace build --production",
     "start": "ENV_SILENT=true node server.js >> application.log",
-    "stripe:listen": "stripe listen --forward-to https://api.my-ticket.local:3333/direct/webhook --forward-connect-to https://api.my-ticket.local:3333/connect/webhook",
     "dev": "ENABLE_HTTPS=true node ace serve --watch",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
     "lint:fix": "npm run lint --fix",
-    "cert": "mkcert -cert-file ./.keys/local.crt -key-file ./.keys/local.key '*.my-ticket.local' localhost 127.0.0.1",
+    "cert": "mkcert -cert-file ./.keys/local.crt -key-file ./.keys/local.key '*.hajdenpun.local' localhost 127.0.0.1",
     "prepare": "husky install"
   },
   "eslintConfig": {

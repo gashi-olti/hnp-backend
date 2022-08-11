@@ -1,0 +1,9 @@
+{
+  "email": "Please enter a valid email address",
+  "email exists": "This email address is in use",
+  "required": "This is a required field",
+  "confirm password": "Passwords do not match",
+  "url invalid": "Please enter a valid URL",
+  "maxlength": "The input cannot be longer than {{ options.maxLength }} characters.",
+  "max items": "Maximum of {{ options.maxLength }} items allowed"
+}
