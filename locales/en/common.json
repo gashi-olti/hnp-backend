@@ -1,3 +1,6 @@
 {
-  "application error": "There was an error. Please contact support if the issues persist."
+  "application error": "There was an error. Please contact support if the issues persist.",
+  "error sending mail": "Error occured while sending email.",
+  "registration": "Registration",
+  "registration subject": "Thank you for registering at hajdenpun.com"
 }
