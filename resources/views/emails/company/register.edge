@@ -1,0 +1,21 @@
+@layout('emails/_layout')
+@section('content')
+
+    @if(args.name) 
+        <mj-text>Hi {{ args.name }},</mj-text>
+    @else
+        <mj-text>Hi there,</mj-text>
+    @end
+
+    <mj-text>
+        welcome to hajdenpun.com. Enjoy finding your new employees!
+    </mj-text>
+
+    <mj-text padding-bottom="30px">Activate your account by clicking on the button</mj-text>
+
+    @!component('components/button', {
+        text: 'Confirm registration',
+        link: args.url
+    })
+
+@endsection
