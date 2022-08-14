@@ -3,6 +3,7 @@
   "include": ["**/*"],
   "exclude": ["node_modules", "build"],
   "compilerOptions": {
+    "target": "es6",
     "useDefineForClassFields": true,
     "outDir": "build",
     "rootDir": "./",
