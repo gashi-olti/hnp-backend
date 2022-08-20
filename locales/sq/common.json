@@ -2,5 +2,7 @@
   "application error": "Pati një gabim. Ju lutemi kontaktoni mirëmbajtësit nëse problemet vazhdojnë.",
   "error sending mail": "Ndodhi një gabim gjatë dërgimit të emailit.",
   "registration": "Regjistrimi",
-  "registration subject": "Faleminderit qe u regjistruat tek hajdenpun.com"
+  "registration subject": "Faleminderit qe u regjistruat tek hajdenpun.com",
+  "forgot password": "Forgot Password",
+  "forgot password subject": "Your new hajdenpun.com password is just a click away"
 }

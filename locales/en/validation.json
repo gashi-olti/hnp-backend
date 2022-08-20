@@ -6,5 +6,6 @@
   "url invalid": "Please enter a valid URL",
   "maxlength": "The input cannot be longer than {{ options.maxLength }} characters.",
   "minlength": "The input must contain at least {{ options.minLength }} characters.",
-  "max items": "Maximum of {{ options.maxLength }} items allowed"
+  "max items": "Maximum of {{ options.maxLength }} items allowed",
+  "email not exists": "Account with this email address does not exist."
 }
