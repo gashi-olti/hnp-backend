@@ -35,7 +35,6 @@ export default class EmailService {
       }
     }
     const { html: messageHTML, text: messageText } = this.getMessage(template, state)
-    console.log('inside send function...')
 
     try {
       await Mail.use(Env.get('EMAIL_SERVICE')).send((message: MessageContract) => {
@@ -51,7 +50,6 @@ export default class EmailService {
           callback(message)
         }
       })
-      console.log('inside send/try catch function...')
     } catch (error) {
       Logger.error('Error sendind email: %s', error, error.message)
       throw new UnprocessableEntityException({
@@ -67,8 +65,19 @@ export default class EmailService {
     state: MessageState,
     callback?: MessageComposeCallback
   ) {
-    console.log('insdie sendCompany function...')
     await this.send(to, subject, `emails/company/${template}`, state, callback)
+  }
+
+  public async sendUser(
+    to: string,
+    subject: string,
+    template: string,
+    state: MessageState,
+    callback?: MessageComposeCallback,
+    // ony use force for setting new email address
+    force?: boolean
+  ) {
+    await this.send(to, subject, `emails/user/${template}`, state, callback, force)
   }
 
   private getMessage(viewFile: string, state: any): { html: string; text: string } {
