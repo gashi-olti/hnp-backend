@@ -6,5 +6,6 @@
   "url invalid": "Ju lutemi shkruani një URL të vlefshme",
   "maxlength": "Fusha nuk mund të përmbajë më shumë se {{ options.maxLength }} karaktere.",
   "minlength": "Fusha duhet të përmbajë së paku {{ options.minLength }} karaktere.",
-  "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj"
+  "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj",
+  "email not exists": "Llogaria me këtë email adresë nuk ekziston."
 }
