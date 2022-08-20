@@ -32,6 +32,14 @@
             </mj-section>
         </mj-wrapper>
 
+        {{--  Content After  --}}
+        <mj-section padding="10px 0">
+            <mj-column>
+                @section('contentafter')
+                @endsection
+            </mj-column>
+        </mj-section>
+
         {{--  Footer content  --}}
         @include('emails/_footer')
     </mj-body>
