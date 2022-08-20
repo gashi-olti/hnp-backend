@@ -3,6 +3,8 @@
   "error sending mail": "Ndodhi një gabim gjatë dërgimit të emailit.",
   "registration": "Regjistrimi",
   "registration subject": "Faleminderit qe u regjistruat tek hajdenpun.com",
-  "forgot password": "Forgot Password",
-  "forgot password subject": "Your new hajdenpun.com password is just a click away"
+  "forgot password": "Keni harruar fjalëkalimin",
+  "forgot password subject": "Fjalëkalimi juaj i ri i hajdenpun.com është vetëm një hap larg",
+  "password reset": "Rivendosja e fjalëkalimit",
+  "password reset subject": "Fjalëkalimi juaj për hajdenpun.com është rivendosur me sukses"
 }
