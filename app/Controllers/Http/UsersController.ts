@@ -2,6 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UsersService from 'App/Services/UsersService'
 import ForgotPasswordValidator from 'App/Validators/ForgotPasswordValidator'
 import RegisterValidator from 'App/Validators/RegisterValidator'
+import ResendVerifyEmailValidator from 'App/Validators/ResendVerifyEmailValidator'
 import ResetPasswordValidator from 'App/Validators/ResetPassword'
 import VerifyEmailValidator from 'App/Validators/VerifyEmailValidator'
 
@@ -16,6 +17,11 @@ export default class UsersController {
   public async verifyEmail(ctx: HttpContextContract) {
     const data = await ctx.request.validate(VerifyEmailValidator)
     return usersService.verifyEmail(ctx.auth, data)
+  }
+
+  public async resendVerifyEmail(ctx: HttpContextContract) {
+    const data = await ctx.request.validate(ResendVerifyEmailValidator)
+    return usersService.resendVerifyEmail(data)
   }
 
   public async forgotPassword(ctx: HttpContextContract) {
