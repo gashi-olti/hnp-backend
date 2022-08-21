@@ -13,6 +13,7 @@ import VerifyEmailValidator from 'App/Validators/VerifyEmailValidator'
 import { DateTime } from 'luxon'
 import ForgotPasswordValidator from 'App/Validators/ForgotPasswordValidator'
 import ResetPasswordValidator from 'App/Validators/ResetPassword'
+import ResendVerifyEmailValidator from 'App/Validators/ResendVerifyEmailValidator'
 
 const authService = new AuthService()
 
@@ -169,6 +170,35 @@ export default class UsersService {
       return { success: true }
     } catch (err) {
       Logger.error('Error resetPassword: %s', err.message)
+      throw new Exception(i18next.t('common:application error'), 500)
+    }
+  }
+
+  public async resendVerifyEmail(data: ResendVerifyEmailValidator['schema']['props']) {
+    try {
+      const { email } = data
+
+      const user = await User.query().where('email', email).whereNotNull('created_at').firstOrFail()
+
+      await this.emailService.sendCompany(
+        data.email,
+        i18next.t('common:registration subject'),
+        'register',
+        {
+          user,
+          args: {
+            name: '',
+            title: i18next.t('common:registration'),
+            url: `${Env.get('FRONTEND_URL')}/verify?token=${user.verificationToken}&email=${
+              user.email
+            }`,
+          },
+        }
+      )
+
+      return { success: true }
+    } catch (err) {
+      Logger.error('Error verifyEmail: %s', err.message)
       throw new Exception(i18next.t('common:application error'), 500)
     }
   }

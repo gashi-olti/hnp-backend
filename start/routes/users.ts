@@ -7,3 +7,6 @@ Route.post('forgot', 'UsersController.forgotPassword')
 Route.post('reset', 'UsersController.resetPassword')
 
 // Private ##############################
+Route.group(() => {
+  Route.post('verify/resend', 'UsersController.resendVerifyEmail')
+})
