@@ -7,6 +7,9 @@ import ImageUploadValidator from 'App/Validators/ImageUploadValidator'
 import sharp from 'sharp'
 import { validateImage } from 'Utils/FileUploadHandler/imageHelper'
 import FileHandler from 'Utils/FileUploadHandler'
+import FilesServicer from 'App/Services/FilesService'
+
+const fileService = new FilesServicer()
 
 export default class FilesController {
   public async uploadImage({ request }: HttpContextContract) {
@@ -35,5 +38,7 @@ export default class FilesController {
     }
   }
 
-  // public async image(ctx: HttpContextContract) {}
+  public async image(ctx: HttpContextContract) {
+    await fileService.getImage(ctx)
+  }
 }
