@@ -87,7 +87,6 @@ export default class UsersService {
         .whereNull('verified_at')
         .firstOrFail()
 
-      console.log('user ', user)
       user.verificationToken = null
       user.verificationCreatedAt = null
       user.verifiedAt = DateTime.utc()
