@@ -16,7 +16,7 @@ export default class FilesController {
     const entity = request.param('entity')
     const type = request.param('type')
 
-    const imageConfig: ImageConfig = Config.get('imageconfig')
+    const imageConfig: ImageConfig = Config.get('imageConfig')
     const imageEntity = imageConfig.entities[entity]
     if (!imageEntity) {
       throw new Exception(i18next.t('validation:unknown media entity'), 422)
