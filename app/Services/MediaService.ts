@@ -2,7 +2,6 @@ import { Exception } from '@adonisjs/core/build/standalone'
 import Logger from '@ioc:Adonis/Core/Logger'
 import i18next from '@ioc:I18n/Next'
 import { ImageType } from '@ioc:Adonis/Addons/ImageConfig'
-import { LucidModel, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Media from 'App/Models/Media'
 import FileHandler from 'Utils/FileUploadHandler'
 
@@ -64,7 +63,7 @@ export default class MediaService {
     body: (MediaBody | undefined)[],
     entity: string,
     type: ImageType,
-    existingMedia: ManyToMany<typeof Media, LucidModel> | null
+    existingMedia: Media[] | null
   ) {
     const toCreate: any[] = []
     const toUpdate: any[] = []
