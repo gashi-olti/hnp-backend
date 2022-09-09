@@ -6,4 +6,5 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
   Route.get('company', 'CompaniesController.getCompany')
-})
+  Route.put('company/profile', 'CompaniesController.updateCompanyProfile')
+}).middleware('auth')

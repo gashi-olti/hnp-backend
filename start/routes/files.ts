@@ -1,10 +1,18 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-// Public ###############################
+/*
+|--------------------------------------------------------------------------
+| Public
+|--------------------------------------------------------------------------
+*/
 
-Route.get('image/:filename', 'FileController.image')
+Route.get('/image/:filename', 'FileController.image')
 
-// Private ##############################
+/*
+|--------------------------------------------------------------------------
+| Protected
+|--------------------------------------------------------------------------
+*/
 
 Route.group(() => {
   Route.post('upload/:entity/type/:type', 'FilesController.uploadImage')
