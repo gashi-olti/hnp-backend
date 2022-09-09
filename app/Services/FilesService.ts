@@ -24,10 +24,9 @@ export default class FilesServicer {
     try {
       const filename = request.param('filename')
       const originalFile = [this.uploadConfig.original, filename].join('/')
-
       if (!(await fileHandler.fileExists(originalFile))) {
         response.status(404)
-        response.send('Not Found')
+        response.send('Not found')
         return
       }
 
@@ -39,8 +38,9 @@ export default class FilesServicer {
       const variants = variantConfig.variants
       const baseVariant = variantConfig.base
 
-      const variantExists = variants.find((item) => item.name === qsVariant.name)
-      const variant = variantExists ? variantExists : baseVariant
+      const foundVariant = variants.find((item) => item.name === qsVariant)
+
+      const variant = foundVariant ? foundVariant : baseVariant
 
       const fileName = [this.uploadConfig.variants, `${variant.name}-${filename}`].join('/')
 
