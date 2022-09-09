@@ -49,7 +49,7 @@ export default class LocalFileHandler implements AbstractFileUploadHandler {
     }
 
     const fileName = newFileName ?? null
-    if (fileName && newFile && newFile.includes(`${this.uploadConfig.tmp}`)) {
+    if (fileName && newFile && newFile.includes(`${this.uploadConfig.tmp}/`)) {
       if (oldFile) {
         await this.deleteMedia(oldFile)
       }
