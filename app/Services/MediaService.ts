@@ -11,7 +11,6 @@ interface MediaBody {
   source?: string
   title?: string
   credit?: string
-  order?: number
 }
 
 const fileHandler = new FileHandler()
