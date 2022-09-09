@@ -22,7 +22,6 @@ export default class LocalFileHandler implements AbstractFileUploadHandler {
     if (!media) {
       throw new Exception(i18next.t('validation:no media to upload'), 404)
     }
-
     const { extname } = media
     const fileName = `${uuid()}.${extname}`
 
@@ -62,28 +61,28 @@ export default class LocalFileHandler implements AbstractFileUploadHandler {
   }
 
   public async moveMedia(media: string) {
-    const mediaName = media.split('/').pop() ?? ''
-    const tmpMediaName = [this.uploadConfig.tmp, mediaName].join('/')
+    const name = media.split('/').pop() ?? ''
+    const tmpName = [this.uploadConfig.tmp, name].join('/')
 
-    if (!(await this.fileExists(tmpMediaName))) {
+    if (!(await this.fileExists(tmpName))) {
       throw new Exception(i18next.t('validation:no media found'), 404)
     }
 
+    // Create directories if not exists already
     try {
       await fs.mkdir(Application.tmpPath('uploads', this.uploadConfig.original))
     } catch (e) {}
-
     try {
       await fs.mkdir(Application.tmpPath('uploads', this.uploadConfig.upload))
     } catch (e) {}
 
     try {
       await fs.rename(
-        Application.tmpPath('uploads', tmpMediaName),
-        Application.tmpPath('uploads', this.uploadConfig.original, mediaName)
+        Application.tmpPath('uploads', tmpName),
+        Application.tmpPath('uploads', this.uploadConfig.original, name)
       )
 
-      return mediaName
+      return name
     } catch (error) {
       Logger.error('Error while moving the media: %s', error.message)
       throw new Exception(i18next.t('validation:error saving media'), 500)
@@ -102,6 +101,7 @@ export default class LocalFileHandler implements AbstractFileUploadHandler {
         deleteBatch.push(this.deleteFileSilently(filePath))
       })
       try {
+        // deleteBatch will throw the error of the deleteFileSilently promises here and not be cought inside the deleteFileSilently function. This workaround does the same as fail silent.
         await Promise.all(deleteBatch)
       } catch (error) {}
     } catch (error) {
@@ -169,7 +169,7 @@ export default class LocalFileHandler implements AbstractFileUploadHandler {
     return existsSync(Application.tmpPath('uploads', file))
   }
 
-  public async deleteFileSilently(path: string) {
+  private async deleteFileSilently(path: string) {
     try {
       return fs.unlink(Application.tmpPath('uploads', path))
     } catch (error) {}

@@ -22,8 +22,8 @@ export default class FileHandler implements AbstractFileUploadHandler {
   }
 
   public uploadFromStream(
-    file?: string | undefined,
-    contentType?: string | false | undefined
+    file?: string,
+    contentType?: string | false
   ): { writeStream: PassThrough; promise: Promise<string> } {
     return this.handler.uploadFromStream(file, contentType)
   }
@@ -33,7 +33,7 @@ export default class FileHandler implements AbstractFileUploadHandler {
   }
 
   public async moveMedia(file: string) {
-    return this.moveMedia(file)
+    return this.handler.moveMedia(file)
   }
 
   public async deleteMedia(file: string) {
@@ -48,18 +48,18 @@ export default class FileHandler implements AbstractFileUploadHandler {
     newFile: string | undefined,
     oldFile: string | null | undefined
   ) {
-    return this.updateOrDeleteMedia(newFile, oldFile)
+    return this.handler.updateOrDeleteMedia(newFile, oldFile)
   }
 
   public async readFile(file: string): Promise<{
     file: string | ResponseStream
-    data?: { contentType?: string | undefined; contentLength?: number | undefined } | undefined
+    data?: { contentType?: string; contentLength?: number }
   }> {
     return this.handler.readFile(file)
   }
 
-  public async readFileAsBuffer(file: string) {
-    return this.readFileAsBuffer(file)
+  public async readFileAsBuffer(file: string): Promise<Buffer> {
+    return this.handler.readFileAsBuffer(file)
   }
 
   public async fileExists(file: string) {
