@@ -5,6 +5,7 @@ import Config from '@ioc:Adonis/Core/Config'
 import Logger from '@ioc:Adonis/Core/Logger'
 import i18next from '@ioc:I18n/Next'
 import Company from 'App/Models/Company'
+import Media from 'App/Models/Media'
 import User from 'App/Models/User'
 import { CompanyProfileValidator } from 'App/Validators/CompanyProfileValidator'
 import MediaService from './MediaService'
@@ -19,10 +20,33 @@ export default class CompaniesService {
     const user = auth.user as User
     const company = await user.related('company').query().firstOrFail()
 
+    const cover = await Media.query()
+      .select('*')
+      .where('company_id', '=', company.id)
+      .andWhere('media_type', '=', 'cover')
+      .andWhereNotNull('source')
+      .limit(1)
+      .first()
+
+    const media = await Media.query()
+      .select('*')
+      .where('company_id', '=', company.id)
+      .where('media_type', '=', 'media')
+      .andWhereNotNull('source')
+      .limit(4)
+
     try {
       return {
         ...company.serialize(),
         email: user.email,
+        cover: {
+          uuid: cover?.uuid,
+          title: cover?.title,
+          source: cover?.source,
+          type: cover?.mimeType,
+          src: cover?.src,
+        },
+        media,
       }
     } catch (err) {
       Logger.error('Error getting company: %s', err.message)
@@ -47,27 +71,35 @@ export default class CompaniesService {
 
     try {
       const company = await user.related('company').query().firstOrFail()
-
       company.merge(data)
 
-      if (cover) {
-        await MediaService.uploadSingleMedia(
-          company.id,
-          cover,
-          'company',
-          imageEntities.company.cover,
-          null
-        )
-      }
+      const coverExists = await Media.query()
+        .where('company_id', '=', company.id)
+        .andWhere('media_type', '=', 'cover')
+        .first()
+
+      await MediaService.uploadSingleMedia(
+        company.id,
+        cover,
+        'company',
+        imageEntities.company.cover,
+        coverExists
+      )
 
       if (media) {
-        await MediaService.uploadMultipleMedia(
+        const companyMedia = await Media.query()
+          .where('company_id', '=', company.id)
+          .andWhere('media_type', '=', 'media')
+
+        const { toDelete } = await MediaService.uploadMultipleMedia(
           company.id,
           media,
           'company',
           imageEntities.company.media,
-          null
+          companyMedia
         )
+
+        await Media.query().delete().whereIn('id', toDelete)
       }
 
       await company.save()
