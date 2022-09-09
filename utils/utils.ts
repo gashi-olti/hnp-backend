@@ -22,8 +22,8 @@ export async function getUserName(user: User) {
     if (!user.company) {
       await user.load('company')
     }
-    if (user.company.companyName) {
-      return user.company.companyName
+    if (user.company.name) {
+      return user.company.name
     }
   }
 }
