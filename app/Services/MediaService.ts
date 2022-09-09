@@ -99,7 +99,7 @@ export default class MediaService {
             companyId,
             title: mediaItem.title,
             entity,
-            medieType: type.name,
+            mediaType: type.name,
             credit: mediaItem?.credit,
             mimeType,
           }
