@@ -12,5 +12,7 @@
   "phone invalid": "Numri i dhënë i telefonit është i pavlefshëm",
   "image required": "Ju lutemi futni një imazh",
   "image extnames": "Vetëm imazhet lejohen të ngarkohen",
-  "max image size": "Mund të ngarkohen maksimumi {{ options.size }} imazhe"
+  "max image size": "Mund të ngarkohen maksimumi {{ options.size }} imazhe",
+  "image not landscape": "Piktura e përzgjedhur nuk është në formatin peizazh",
+  "no media found": "Nuk u gjet asnjë media"
 }
