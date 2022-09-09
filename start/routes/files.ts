@@ -6,7 +6,7 @@ import Route from '@ioc:Adonis/Core/Route'
 |--------------------------------------------------------------------------
 */
 
-Route.get('/image/:filename', 'FileController.image')
+Route.get('/image/:filename', 'FilesController.image')
 
 /*
 |--------------------------------------------------------------------------
