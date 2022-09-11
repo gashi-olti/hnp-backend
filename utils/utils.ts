@@ -1,4 +1,5 @@
 import Env from '@ioc:Adonis/Core/Env'
+import User from 'App/Models/User'
 import Hashids from 'hashids'
 import DOMPurify from 'isomorphic-dompurify'
 
@@ -13,6 +14,17 @@ export function getProtocol(url: string) {
     return urlObject.protocol.replace(/\W/, '')
   } catch (error) {
     throw new Error(`Unable to get protocol from ${url}.`)
+  }
+}
+
+export async function getUserName(user: User) {
+  if (user.companyId) {
+    if (!user.company) {
+      await user.load('company')
+    }
+    if (user.company.name) {
+      return user.company.name
+    }
   }
 }
 

@@ -5,5 +5,14 @@
   "confirm password": "Passwords do not match",
   "url invalid": "Please enter a valid URL",
   "maxlength": "The input cannot be longer than {{ options.maxLength }} characters.",
-  "max items": "Maximum of {{ options.maxLength }} items allowed"
+  "minlength": "The input must contain at least {{ options.minLength }} characters.",
+  "max items": "Maximum of {{ options.maxLength }} items allowed",
+  "email not exists": "Account with this email address does not exist.",
+  "invalid token": "Invalid Token",
+  "phone invalid": "The given phone number is invalid",
+  "image required": "Please insert an image",
+  "image extnames": "Only images are allowed to be uploaded",
+  "max image size": "A maximum of {{ options.size }} images can be uploaded",
+  "image not landscape": "Selected image is not landscape.",
+  "no media found": "No media found"
 }

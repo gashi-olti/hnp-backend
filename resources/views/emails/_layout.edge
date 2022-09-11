@@ -1,0 +1,48 @@
+<mjml>
+    <mj-head>
+        <mj-title>{{ args.title }}</mj-title>
+        <mj-font name="Rubik" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800;900&display=swap" />
+
+        <mj-style>
+            .bg-gradient {
+                background-image: linear-gradient(to right, #05445E 5%, #189AB4);
+            }
+        </mj-style>
+    
+        <mj-attributes>
+            <mj-text font-size="16px" lineheight="1.4" />
+            <mj-button border-radius="9999px" background-color="#05445E"
+                color="white" font-size="16px" letter-spacing="0.05em"
+                text-transform="uppercase" />
+            <mj-all font-family="'Rubik', sans-serif" font-weight="300" />
+        </mj-attributes>
+    </mj-head>
+    
+    <mj-body width="800">
+        {{--  Header  --}}
+        @include('emails/_header')
+
+        <mj-wrapper padding-top="20px" padding-bottom="20px" backgorund-size="60%" background-position-y="10px" background-position-x="140%" background-repeat="no-repeat" background-url="cid:mts-background">
+            {{--  Main Content  --}}
+            <mj-section padding="10px 0">
+                <mj-column>
+                    @section('content')
+                    @endsection
+                </mj-column>
+            </mj-section>
+        </mj-wrapper>
+
+        {{--  Content After  --}}
+        <mj-wrapper padding-top="20px" padding-bottom="20px" backgorund-size="60%">
+            <mj-section padding="10px 0">
+                <mj-column>
+                    @section('contentafter')
+                    @endsection
+                </mj-column>
+            </mj-section>
+        </mj-wrapper>
+
+        {{--  Footer content  --}}
+        @include('emails/_footer')
+    </mj-body>
+</mjml>

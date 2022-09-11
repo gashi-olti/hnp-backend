@@ -5,8 +5,8 @@ declare module '@ioc:Adonis/Addons/ImageConfig' {
     height?: number
     crop?: boolean
     quality?: number
-    deafult: number
-    grayscale: boolean
+    deafult?: number
+    grayscale?: boolean
   }
 
   interface ImageValidation {
