@@ -11,7 +11,7 @@ class CompanyProfileValidator {
     name: schema.string({ trim: true }, [rules.maxLength(120)]),
     number: schema.string.optional({ trim: true }, [rules.maxLength(35)]),
     industry: schema.string.optional({ trim: true }, [rules.maxLength(255)]),
-    size: schema.string.optional({ trim: true }, [rules.maxLength(255)]),
+    size: schema.number.optional(),
     founded: schema.string.optional({ trim: true }, [rules.maxLength(30)]),
     website: schema.string.optional({ trim: true }, [
       rules.maxLength(255),

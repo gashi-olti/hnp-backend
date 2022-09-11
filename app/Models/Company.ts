@@ -28,7 +28,7 @@ export default class Company extends BaseModel {
   public industry: string
 
   @column()
-  public size: string
+  public size: number
 
   @column()
   public founded: string
