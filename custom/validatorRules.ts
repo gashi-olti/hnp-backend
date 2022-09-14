@@ -1,5 +1,6 @@
 import { validator } from '@ioc:Adonis/Core/Validator'
 import DOMPurify from 'isomorphic-dompurify'
+import { DateTime } from 'luxon'
 
 validator.rule(
   'accepted',
@@ -74,3 +75,18 @@ validator.rule(
     }
   }
 )
+
+validator.rule('dateMax', async (ends, _, { pointer, arrayExpressionPointer, errorReporter }) => {
+  if (ends) {
+    const oneMonthFromNow = DateTime.local().plus({ month: 1 })
+
+    if (ends > oneMonthFromNow) {
+      errorReporter.report(
+        pointer,
+        'dateMax',
+        'Date extends post date limit',
+        arrayExpressionPointer
+      )
+    }
+  }
+})

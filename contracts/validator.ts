@@ -3,5 +3,6 @@ declare module '@ioc:Adonis/Core/Validator' {
     accepted(): Rule
     plaintextMax(maxLength: number): Rule
     numericEnumIncludes(acceptedValues: any[]): Rule
+    dateMax(): Rule
   }
 }
