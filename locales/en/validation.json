@@ -14,5 +14,9 @@
   "image extnames": "Only images are allowed to be uploaded",
   "max image size": "A maximum of {{ options.size }} images can be uploaded",
   "image not landscape": "Selected image is not landscape.",
-  "no media found": "No media found"
+  "no media found": "No media found",
+
+  "post": {
+    "invalid selection": "Zgjedhje e pavlefshme, ju lutemi zgjidhni një tjetër"
+  }
 }

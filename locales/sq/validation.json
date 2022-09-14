@@ -14,5 +14,9 @@
   "image extnames": "Vetëm imazhet lejohen të ngarkohen",
   "max image size": "Mund të ngarkohen maksimumi {{ options.size }} imazhe",
   "image not landscape": "Piktura e përzgjedhur nuk është në formatin peizazh",
-  "no media found": "Nuk u gjet asnjë media"
+  "no media found": "Nuk u gjet asnjë media",
+
+  "post": {
+    "invalid selection": "Invalid selection, please choose another one"
+  }
 }
