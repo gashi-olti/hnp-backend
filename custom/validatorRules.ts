@@ -53,8 +53,8 @@ validator.rule(
 
 validator.rule(
   'numericEnumIncludes',
-  (value, [accaptedValues], { pointer, arrayExpressionPointer, errorReporter }) => {
-    if (accaptedValues.length === 0) {
+  (value, [acceptedValues], { pointer, arrayExpressionPointer, errorReporter }) => {
+    if (acceptedValues.length === 0) {
       errorReporter.report(
         pointer,
         'numericEnumIncludes',
@@ -62,9 +62,9 @@ validator.rule(
         arrayExpressionPointer
       )
     }
-    const numericAccaptedValues = accaptedValues.filter((x) => typeof x === 'number')
+    const numericAcceptedValues = acceptedValues.filter((x) => typeof x === 'number')
 
-    if (!numericAccaptedValues.includes(value)) {
+    if (!numericAcceptedValues.includes(value)) {
       errorReporter.report(
         pointer,
         'numericEnumIncludes',
