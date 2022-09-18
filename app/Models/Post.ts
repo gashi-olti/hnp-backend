@@ -8,15 +8,6 @@ export enum JobTypes {
   internship,
 }
 
-export enum ExperienceTypes {
-  zeroToOneYear = 1,
-  oneToTwoYears,
-  twoToThreeYears,
-  threeToFourYears,
-  fiveToTenYears,
-  tenPlusYears,
-}
-
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -53,13 +44,16 @@ export default class Post extends BaseModel {
   public positions: number
 
   @column()
-  public experience: number
+  public experience: string
 
   @column()
   public salary: string
 
   @column()
   public ends: string | DateTime
+
+  @column.dateTime({ serializeAs: null })
+  public deletedAt: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

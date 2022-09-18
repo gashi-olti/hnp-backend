@@ -1,6 +1,6 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { ExperienceTypes, JobTypes } from 'App/Models/Post'
+import { JobTypes } from 'App/Models/Post'
 
 import i18next from '@ioc:I18n/Next'
 
@@ -14,9 +14,9 @@ export default class PostValidator {
     category: schema.number(),
     location: schema.string({ trim: true }, rules.maxLength[255]),
     positions: schema.number(),
-    experience: schema.number([rules.numericEnumIncludes(Object.values(ExperienceTypes))]),
+    experience: schema.string({ trim: true }, rules.maxLength[50]),
     salary: schema.string({ trim: true }, [rules.maxLength(50)]),
-    ends: schema.date({}, [rules.dateMax()]),
+    ends: schema.date({ format: 'dd-MM-yyyy' }, [rules.dateMax()]),
   })
 
   public messages = {

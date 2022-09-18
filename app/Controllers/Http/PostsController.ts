@@ -9,4 +9,20 @@ export default class PostsController {
     const data = await ctx.request.validate(PostValidator)
     return postsService.createPost(ctx.auth, data)
   }
+
+  public async updatePost(ctx: HttpContextContract) {
+    const postUuid = ctx.request.param('postUuid')
+    const data = await ctx.request.validate(PostValidator)
+    return postsService.updatePost(ctx.auth, postUuid, data)
+  }
+
+  public async getPostForCompany(ctx: HttpContextContract) {
+    const postUuid = ctx.request.param('postUuid')
+    return postsService.getPostForCompany(postUuid, ctx.auth)
+  }
+
+  public async deletePost(ctx: HttpContextContract) {
+    const postUuid = ctx.request.param('postUuid')
+    return postsService.deletePost(ctx.bouncer, postUuid)
+  }
 }

@@ -6,6 +6,7 @@ import Logger from '@ioc:Adonis/Core/Logger'
 import i18next from '@ioc:I18n/Next'
 import Company from 'App/Models/Company'
 import Media from 'App/Models/Media'
+import Post from 'App/Models/Post'
 import User from 'App/Models/User'
 import { CompanyProfileValidator } from 'App/Validators/CompanyProfileValidator'
 import MediaService from './MediaService'
@@ -109,6 +110,36 @@ export default class CompaniesService {
     } catch (err) {
       Logger.error('Error updating company profile: %s', err.message)
       throw new Exception(i18next.t('company:error updating company profile'))
+    }
+  }
+
+  public async searchCompanyPosts(auth: AuthContract, queryParams: any) {
+    const user = auth.user as User
+
+    try {
+      if (!user.companyId) {
+        throw new Exception(i18next.t('company:not company'), 422)
+      }
+
+      const posts = Post.query()
+        .select('uuid', 'title', 'created_at', 'ends', 'location')
+        .where('companyId', user.companyId)
+        .whereNull('deletedAt')
+        .orderBy('created_at', 'asc')
+        .if(queryParams.q?.length > 0, (query) => {
+          query.andWhere((query) => {
+            query.where('title', 'ILIKE', `%${queryParams.q}%`)
+          })
+        })
+        .paginate(
+          queryParams?.page ? queryParams.page : Config.get('hnp.pagination.defaultPage'),
+          queryParams?.limit ? queryParams.limit : Config.get('hnp.pagination.defaultLimit')
+        )
+
+      return posts
+    } catch (err) {
+      Logger.error('Error getting company posts: %s', err.message)
+      throw new Exception(i18next.t('common:application error'), 500)
     }
   }
 }
