@@ -78,7 +78,9 @@ validator.rule(
 
 validator.rule('dateMax', async (ends, _, { pointer, arrayExpressionPointer, errorReporter }) => {
   if (ends) {
-    const oneMonthFromNow = DateTime.local().plus({ month: 1 })
+    const oneMonthFromNow = new Date(
+      DateTime.local().plus({ month: 1 }).toFormat('dd-MM-yyyy').toString()
+    )
 
     if (ends > oneMonthFromNow) {
       errorReporter.report(
