@@ -14,7 +14,7 @@ export default class Posts extends BaseSchema {
       table.integer('category').notNullable()
       table.string('location').notNullable()
       table.integer('positions').notNullable()
-      table.integer('experience').nullable()
+      table.string('experience').nullable()
       table.string('salary').nullable()
       table.date('ends').notNullable()
 
