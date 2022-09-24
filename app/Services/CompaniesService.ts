@@ -74,32 +74,41 @@ export default class CompaniesService {
       const company = await user.related('company').query().firstOrFail()
       company.merge(data)
 
-      const coverExists = await Media.query()
-        .where('company_id', '=', company.id)
-        .andWhere('media_type', '=', 'cover')
-        .first()
+      // const coverExists = await Media.query()
+      //   .where('company_id', '=', company.id)
+      //   .andWhere('media_type', '=', 'cover')
+      //   .first()
+      if (company.coverId) {
+        await company.load('cover')
+      }
 
-      await MediaService.uploadSingleMedia(
+      const coverId = await MediaService.uploadSingleMedia(
         company.id,
         cover,
         'company',
         imageEntities.company.cover,
-        coverExists
+        company.cover
       )
 
-      if (media) {
-        const companyMedia = await Media.query()
-          .where('company_id', '=', company.id)
-          .andWhere('media_type', '=', 'media')
+      if (coverId) {
+        company.coverId = coverId
+        await company.save()
+      }
 
-        const { toDelete } = await MediaService.uploadMultipleMedia(
+      if (media) {
+        // const companyMedia = await Media.query()
+        //   .where('company_id', '=', company.id)
+        //   .andWhere('media_type', '=', 'media')
+
+        const { toSync, toDelete } = await MediaService.uploadMultipleMedia(
           company.id,
           media,
           'company',
           imageEntities.company.media,
-          companyMedia
+          company.media
         )
 
+        await company.related('media').sync(toSync)
         await Media.query().delete().whereIn('id', toDelete)
       }
 

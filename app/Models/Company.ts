@@ -1,8 +1,17 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  computed,
+  HasOne,
+  hasOne,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
 // import Subscription from './Subscription'
 import { getSlug } from 'Utils/utils'
+import Media from './Media'
 // import StripeService from 'App/Services/StripeService'
 
 export default class Company extends BaseModel {
@@ -59,6 +68,22 @@ export default class Company extends BaseModel {
 
   @column()
   public phone: string
+
+  @column({ serializeAs: null })
+  public coverId: number | null
+
+  @hasOne(() => Media, {
+    localKey: 'coverId',
+    foreignKey: 'id',
+  })
+  public cover: HasOne<typeof Media>
+
+  @manyToMany(() => Media, {
+    pivotTable: 'media_companies',
+    pivotColumns: ['type'],
+    onQuery: (query) => query.where('type', 'media'),
+  })
+  public media: ManyToMany<typeof Media>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
