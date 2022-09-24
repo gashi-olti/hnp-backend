@@ -51,6 +51,9 @@ export default class Company extends BaseModel {
   @column()
   public specialties: string
 
+  // @hasMany(() => Post)
+  // public posts: HasMany<typeof Post>
+
   /**
    * Vat does not exist for non eu-countries
    */

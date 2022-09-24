@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Company from './Company'
 
 export enum JobTypes {
@@ -9,21 +9,24 @@ export enum JobTypes {
 }
 
 export default class Post extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: number
 
   @column()
   public uuid: string
 
-  @column()
+  @column({ serializeAs: null })
   public companyId: number
 
-  @hasOne(() => Company, {
-    serializeAs: null,
-    foreignKey: 'id',
-    localKey: 'companyId',
-  })
-  public company: HasOne<typeof Company>
+  // @hasOne(() => Company, {
+  //   serializeAs: null,
+  //   foreignKey: 'id',
+  //   localKey: 'companyId',
+  // })
+  // public company: HasOne<typeof Company>
+
+  @belongsTo(() => Company)
+  public company: BelongsTo<typeof Company>
 
   @column()
   public title: string

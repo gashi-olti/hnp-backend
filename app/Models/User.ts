@@ -27,7 +27,7 @@ export default class User extends BaseModel {
   @column()
   public uuid: string
 
-  @column()
+  @column({ serializeAs: null })
   public companyId: number
 
   @hasOne(() => Company, {
