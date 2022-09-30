@@ -9,13 +9,13 @@ export default class PostValidator {
 
   public schema = schema.create({
     title: schema.string({ trim: true }, [rules.maxLength(80)]),
-    description: schema.string({ trim: true }, [rules.plaintextMax(1600)]),
+    description: schema.string({ trim: true }, [rules.plaintextMax(4000)]),
     type: schema.number([rules.numericEnumIncludes(Object.values(JobTypes))]),
     category: schema.number(),
     location: schema.string({ trim: true }, rules.maxLength[255]),
     positions: schema.number(),
-    experience: schema.string({ trim: true }, rules.maxLength[50]),
-    salary: schema.string({ trim: true }, [rules.maxLength(50)]),
+    experience: schema.string.optional({ trim: true }, rules.maxLength[50]),
+    salary: schema.string.optional({ trim: true }, [rules.maxLength(50)]),
     ends: schema.date({ format: 'dd-MM-yyyy' }, [rules.dateMax()]),
   })
 
