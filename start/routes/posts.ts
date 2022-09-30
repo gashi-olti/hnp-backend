@@ -17,3 +17,7 @@ Route.group(() => {
   Route.put('posts/:postUuid', 'PostsController.updatePost')
   Route.delete('posts/:postUuid', 'PostsController.deletePost')
 }).middleware('auth:api')
+
+Route.group(() => {
+  Route.get('posts', 'PostsController.search')
+})

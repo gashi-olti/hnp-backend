@@ -5,6 +5,11 @@ import PostValidator from 'App/Validators/PostValidator'
 const postsService = new PostsService()
 
 export default class PostsController {
+  public async search(ctx: HttpContextContract) {
+    const queryParams = ctx.request.qs()
+    return postsService.search(queryParams)
+  }
+
   public async createPost(ctx: HttpContextContract) {
     const data = await ctx.request.validate(PostValidator)
     return postsService.createPost(ctx.auth, data)

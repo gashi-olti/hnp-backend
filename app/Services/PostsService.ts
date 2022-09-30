@@ -11,6 +11,52 @@ import Admin from 'App/Models/Admin'
 import { DateTime } from 'luxon'
 
 export default class PostsService {
+  public async search(queryParams: any) {
+    try {
+      const order = 'title'
+      const direction = 'asc'
+
+      console.log('query params ', queryParams)
+
+      const posts = await Post.query()
+        .select('id', 'uuid', 'company_id', 'title', 'type', 'category', 'location', 'ends')
+        .orderBy(order, direction)
+        .whereNull('deleted_at')
+        .where('ends', '>', DateTime.local().setZone('Europe/Zagreb').toSQLDate())
+        .preload('company', (query) => {
+          query.preload('cover')
+        })
+        .if(queryParams.category?.length > 0, (query) => {
+          const categories = queryParams.category.split(',')
+          categories.map((c: number) => query.where('category', '=', c))
+        })
+        .if(queryParams.type?.length > 0, (query) => {
+          const types = queryParams.type.split(',')
+          types.map((t: number) => query.where('type', '=', t))
+        })
+        .if(queryParams.q?.length > 0, (query) => {
+          query.andWhere((query) => {
+            query.where('title', 'ILIKE', `%${queryParams.q}%`)
+          })
+        })
+
+      return Array.from(
+        await Promise.all(
+          posts.map(async (post) =>
+            post.serialize({
+              relations: {
+                company: { fields: { pick: ['name', 'cover'] } },
+              },
+            })
+          )
+        )
+      )
+    } catch (err) {
+      Logger.error('Error searching posts: %s', err.message)
+      throw new Exception(i18next.t('common:application error'), 500)
+    }
+  }
+
   public async createPost(auth: AuthContract, data: PostValidator['schema']['props']) {
     const user = auth.user as User
 
@@ -43,7 +89,12 @@ export default class PostsService {
         throw new Exception(i18next.t('company:not company'), 422)
       }
 
-      post.merge(data)
+      const optionalValues = {
+        experience: null,
+        salary: null,
+      }
+
+      post.merge({ ...optionalValues, ...data })
       await post.save()
 
       return PostsService.getPostResponse(post)
