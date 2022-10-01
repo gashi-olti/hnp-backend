@@ -16,8 +16,6 @@ export default class PostsService {
       const order = 'title'
       const direction = 'asc'
 
-      console.log('query params ', queryParams)
-
       const posts = await Post.query()
         .select('id', 'uuid', 'company_id', 'title', 'type', 'category', 'location', 'ends')
         .orderBy(order, direction)
@@ -96,6 +94,7 @@ export default class PostsService {
 
       post.merge({ ...optionalValues, ...data })
       await post.save()
+      await post.refresh()
 
       return PostsService.getPostResponse(post)
     } catch (err) {

@@ -130,7 +130,7 @@ export default class CompaniesService {
         throw new Exception(i18next.t('company:not company'), 422)
       }
 
-      const posts = Post.query()
+      const posts = await Post.query()
         .select('uuid', 'title', 'created_at', 'ends', 'location')
         .where('companyId', user.companyId)
         .whereNull('deletedAt')
