@@ -13,4 +13,9 @@ export default class CompaniesController {
     const data = await ctx.request.validate(CompanyProfileValidator)
     return companiesService.updateCompanyProfile(ctx.auth, data)
   }
+
+  public async searchCompanyPosts(ctx: HttpContextContract) {
+    const queryParams = ctx.request.qs()
+    return companiesService.searchCompanyPosts(ctx.auth, queryParams)
+  }
 }
