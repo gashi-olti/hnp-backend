@@ -30,4 +30,9 @@ export default class PostsController {
     const postUuid = ctx.request.param('postUuid')
     return postsService.deletePost(ctx.bouncer, postUuid)
   }
+
+  public async getPost(ctx: HttpContextContract) {
+    const postUuid = ctx.request.param('uuid')
+    return postsService.getPost(postUuid, ctx.auth)
+  }
 }
