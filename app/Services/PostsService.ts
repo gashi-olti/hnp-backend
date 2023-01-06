@@ -138,12 +138,37 @@ export default class PostsService {
     }
   }
 
+  public async getPost(postUuid: string, auth: AuthContract) {
+    try {
+      await auth.use('api').check()
+
+      const post = await Post.query()
+        .where('uuid', postUuid)
+        .whereNull('deleted_at')
+        .if(auth.use('api').isGuest, (query) => {
+          query.where('ends', '>', DateTime.utc().setZone('Europe/Zagreb').toSQLDate())
+        })
+        .firstOrFail()
+
+      return PostsService.getPostResponse(post)
+    } catch (err) {
+      Logger.error('Error getting post: %s', err.message)
+      throw new Exception(i18next.t('common:application error'), 500)
+    }
+  }
+
   public static async getPostResponse(post: Post) {
     await post.refresh()
 
     await post.load('company', (query) => {
       query.select('uuid', 'name')
     })
+
+    if (post.companyId) {
+      await post.load('company', (query) => {
+        query.preload('cover')
+      })
+    }
 
     return {
       ...post.serialize({

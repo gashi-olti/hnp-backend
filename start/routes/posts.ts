@@ -18,6 +18,8 @@ Route.group(() => {
   Route.delete('posts/:postUuid', 'PostsController.deletePost')
 }).middleware('auth:api')
 
+// Public routes
 Route.group(() => {
   Route.get('posts', 'PostsController.search')
+  Route.get('posts/:uuid', 'PostsController.getPost')
 })
