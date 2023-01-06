@@ -5,5 +5,18 @@
   "confirm password": "Fjalëkalimet nuk përputhen",
   "url invalid": "Ju lutemi shkruani një URL të vlefshme",
   "maxlength": "Fusha nuk mund të përmbajë më shumë se {{ options.maxLength }} karaktere.",
-  "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj"
+  "minlength": "Fusha duhet të përmbajë së paku {{ options.minLength }} karaktere.",
+  "max items": "Lejohen maksimumi prej {{ options.maxLength }} artikuj",
+  "email not exists": "Llogaria me këtë email adresë nuk ekziston.",
+  "invalid token": "Token i pavlefshëm",
+  "phone invalid": "Numri i dhënë i telefonit është i pavlefshëm",
+  "image required": "Ju lutemi futni një imazh",
+  "image extnames": "Vetëm imazhet lejohen të ngarkohen",
+  "max image size": "Mund të ngarkohen maksimumi {{ options.size }} imazhe",
+  "image not landscape": "Piktura e përzgjedhur nuk është në formatin peizazh",
+  "no media found": "Nuk u gjet asnjë media",
+
+  "post": {
+    "invalid selection": "Invalid selection, please choose another one"
+  }
 }

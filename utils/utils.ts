@@ -1,4 +1,5 @@
 import Env from '@ioc:Adonis/Core/Env'
+import User from 'App/Models/User'
 import Hashids from 'hashids'
 import DOMPurify from 'isomorphic-dompurify'
 
@@ -16,6 +17,17 @@ export function getProtocol(url: string) {
   }
 }
 
+export async function getUserName(user: User) {
+  if (user.companyId) {
+    if (!user.company) {
+      await user.load('company')
+    }
+    if (user.company.name) {
+      return user.company.name
+    }
+  }
+}
+
 export const numberToCurrency = (number: number, locale: string = 'de-DE') =>
   Number(Math.round(number * 100) / 100).toLocaleString(locale, {
     style: 'currency',
@@ -28,8 +40,19 @@ export const toTitleCase = (str: string): string =>
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
   })
 
+const umlautMap = {
+  '\u00dc': 'UE',
+  '\u00c4': 'AE',
+  '\u00d6': 'OE',
+  '\u00fc': 'ue',
+  '\u00e4': 'ae',
+  '\u00f6': 'oe',
+  '\u00df': 'ss',
+}
+
 export const hashids: { [key: string]: Hashids } = {
-  companies: new Hashids(Env.get('SELLERS_SALT'), 8),
+  posts: new Hashids(Env.get('POSTS_SALT'), 8),
+  companies: new Hashids(Env.get('COMPANIES_SALT'), 8),
 }
 
 export const getSlug = (value: (string | undefined)[], id: number, entity: string) => {
@@ -40,7 +63,17 @@ export const getSlug = (value: (string | undefined)[], id: number, entity: strin
 
   const hid = hashids[entity].encode(id)
   if (filtered.length) {
-    return filtered.join('-').replace(/\s/g, '').toLowerCase() + `-${hid}`
+    return (
+      filtered
+        .join('-')
+        .replace(/\s/g, '')
+        .replace(/[\u00dc|\u00c4|\u00d6][a-z]/g, (a) => {
+          const big = umlautMap[a.slice(0, 1)]
+          return big.charAt(0) + big.charAt(1).toLowerCase() + a.slice(1)
+        })
+        .replace(new RegExp('[' + Object.keys(umlautMap).join('|') + ']', 'g'), (a) => umlautMap[a])
+        .toLowerCase() + `-${hid}`
+    )
   }
   return hid
 }

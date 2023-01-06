@@ -1,5 +1,6 @@
 import { validator } from '@ioc:Adonis/Core/Validator'
 import DOMPurify from 'isomorphic-dompurify'
+import { DateTime } from 'luxon'
 
 validator.rule(
   'accepted',
@@ -33,7 +34,7 @@ validator.rule(
       }
 
       const sanitized = DOMPurify.sanitize(value, {
-        ALLOWED_TAGS: ['p', 'br', 'strong', 'i', 'u', 'ul', 'ol', 'li'],
+        ALLOWED_TAGS: ['p', 'br', 'strong', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3'],
         ALLOWED_ATTR: [],
       })
 
@@ -53,8 +54,8 @@ validator.rule(
 
 validator.rule(
   'numericEnumIncludes',
-  (value, [accaptedValues], { pointer, arrayExpressionPointer, errorReporter }) => {
-    if (accaptedValues.length === 0) {
+  (value, [acceptedValues], { pointer, arrayExpressionPointer, errorReporter }) => {
+    if (acceptedValues.length === 0) {
       errorReporter.report(
         pointer,
         'numericEnumIncludes',
@@ -62,9 +63,9 @@ validator.rule(
         arrayExpressionPointer
       )
     }
-    const numericAccaptedValues = accaptedValues.filter((x) => typeof x === 'number')
+    const numericAcceptedValues = acceptedValues.filter((x) => typeof x === 'number')
 
-    if (!numericAccaptedValues.includes(value)) {
+    if (!numericAcceptedValues.includes(value)) {
       errorReporter.report(
         pointer,
         'numericEnumIncludes',
@@ -75,44 +76,17 @@ validator.rule(
   }
 )
 
-validator.rule(
-  'requiredEarlybirdEnd',
-  async (
-    requiredEarlybirdEnd,
-    _,
-    { pointer, arrayExpressionPointer, errorReporter, root, tip }
-  ) => {
-    const earlybird = validator.helpers.getFieldValue('earlybird', root, tip)
-    const earlybirdQuota = validator.helpers.getFieldValue('earlybird_quota', root, tip)
+validator.rule('dateMax', async (ends, _, { pointer, arrayExpressionPointer, errorReporter }) => {
+  if (ends) {
+    const oneMonthFromNow = DateTime.local().plus({ month: 1 }).toFormat('dd-MM-yyyy')
 
-    if (earlybird && !requiredEarlybirdEnd && !earlybirdQuota) {
-      errorReporter.report(pointer, 'requiredEarlybirdEnd', 'Required', arrayExpressionPointer)
-    }
-  },
-  () => {
-    return {
-      async: true,
+    if (ends > oneMonthFromNow) {
+      errorReporter.report(
+        pointer,
+        'dateMax',
+        'Date extends post date limit',
+        arrayExpressionPointer
+      )
     }
   }
-)
-
-validator.rule(
-  'requiredEarlybirdQuota',
-  async (
-    requiredEarlybirdQuota,
-    _,
-    { pointer, arrayExpressionPointer, errorReporter, root, tip }
-  ) => {
-    const earlybird = validator.helpers.getFieldValue('earlybird', root, tip)
-    const earlybirdEnd = validator.helpers.getFieldValue('earlybird_end', root, tip)
-
-    if (earlybird && !requiredEarlybirdQuota && !earlybirdEnd) {
-      errorReporter.report(pointer, 'requiredEarlybirdQuota', 'Required', arrayExpressionPointer)
-    }
-  },
-  () => {
-    return {
-      async: true,
-    }
-  }
-)
+})

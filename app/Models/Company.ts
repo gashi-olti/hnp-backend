@@ -1,9 +1,18 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne, HasOne, computed, afterFind } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  computed,
+  HasOne,
+  hasOne,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 
-import Subscription from './Subscription'
+// import Subscription from './Subscription'
 import { getSlug } from 'Utils/utils'
-import StripeService from 'App/Services/StripeService'
+import Media from './Media'
+// import StripeService from 'App/Services/StripeService'
 
 export default class Company extends BaseModel {
   @column({ isPrimary: true, serializeAs: null })
@@ -19,22 +28,37 @@ export default class Company extends BaseModel {
   public stripeCustomerId: string | null
 
   @column()
-  public companyName: string
+  public name: string
 
   @column()
-  public companyNumber: string
+  public number: string
 
   @column()
-  public companyDescription: string
+  public industry: string
 
   @column()
-  public companySize: string
+  public size: number
 
   @column()
-  public vatId: string
+  public founded: string
 
   @column()
-  public street: string
+  public website: string
+
+  @column()
+  public description: string
+
+  @column()
+  public specialties: string
+
+  // @hasMany(() => Post)
+  // public posts: HasMany<typeof Post>
+
+  /**
+   * Vat does not exist for non eu-countries
+   */
+  // @column()
+  // public vatId: string
 
   @column()
   public city: string
@@ -48,8 +72,21 @@ export default class Company extends BaseModel {
   @column()
   public phone: string
 
-  @column()
-  public website: string
+  @column({ serializeAs: null })
+  public coverId: number | null
+
+  @hasOne(() => Media, {
+    localKey: 'coverId',
+    foreignKey: 'id',
+  })
+  public cover: HasOne<typeof Media>
+
+  @manyToMany(() => Media, {
+    pivotTable: 'media_companies',
+    pivotColumns: ['type'],
+    onQuery: (query) => query.where('type', 'media'),
+  })
+  public media: ManyToMany<typeof Media>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -57,25 +94,25 @@ export default class Company extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Subscription)
-  public subscription: HasOne<typeof Subscription>
+  // @hasOne(() => Subscription)
+  // public subscription: HasOne<typeof Subscription>
 
-  @afterFind()
-  public static async getSubscription(company: Company) {
-    if (company.id) {
-      await company.load('subscription', (query) => {
-        query.whereNotIn('status', ['incomplete', 'canceled'])
-      })
-      if (company.subscription) {
-        const product = await new StripeService().getProduct(company.subscription.stripeProductId)
-        company.subscription.$sideloaded = { eventLimit: product.metadata.events }
-      }
-    }
-  }
+  // @afterFind()
+  // public static async getSubscription(company: Company) {
+  //   if (company.id) {
+  //     await company.load('subscription', (query) => {
+  //       query.whereNotIn('status', ['incomplete', 'canceled'])
+  //     })
+  //     if (company.subscription) {
+  //       const product = await new StripeService().getProduct(company.subscription.stripeProductId)
+  //       company.subscription.$sideloaded = { eventLimit: product.metadata.events }
+  //     }
+  //   }
+  // }
 
   @computed()
   public get slug(): string | undefined {
-    return getSlug([this.companyName], this.id, 'companies')
+    return getSlug([this.name], this.id, 'companies')
   }
 
   @computed()
