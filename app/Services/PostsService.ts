@@ -17,7 +17,17 @@ export default class PostsService {
       const direction = 'asc'
 
       const posts = await Post.query()
-        .select('id', 'uuid', 'company_id', 'title', 'type', 'category', 'location', 'ends')
+        .select(
+          'id',
+          'uuid',
+          'company_id',
+          'title',
+          'type',
+          'category',
+          'location',
+          'ends',
+          'created_at'
+        )
         .orderBy(order, direction)
         .whereNull('deleted_at')
         .where('ends', '>', DateTime.local().setZone('Europe/Zagreb').toSQLDate())

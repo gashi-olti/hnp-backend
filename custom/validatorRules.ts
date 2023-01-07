@@ -34,7 +34,7 @@ validator.rule(
       }
 
       const sanitized = DOMPurify.sanitize(value, {
-        ALLOWED_TAGS: ['p', 'br', 'strong', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3'],
+        ALLOWED_TAGS: ['p', 'br', 'strong', 'i', 'u', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'a'],
         ALLOWED_ATTR: [],
       })
 
