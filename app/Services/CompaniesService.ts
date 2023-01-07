@@ -151,4 +151,18 @@ export default class CompaniesService {
       throw new Exception(i18next.t('common:application error'), 500)
     }
   }
+
+  public async getCompanyDetails(companyUuid: string) {
+    try {
+      const company = await Company.query()
+        .where('uuid', companyUuid)
+        .select('uuid', 'name', 'industry', 'size', 'founded', 'website')
+        .firstOrFail()
+
+      return company
+    } catch (err) {
+      Logger.error('Error getting company details: %s', err.message)
+      throw new Exception(i18next.t('common:application error'), 500)
+    }
+  }
 }

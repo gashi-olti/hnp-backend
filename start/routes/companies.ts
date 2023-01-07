@@ -9,4 +9,5 @@ Route.group(() => {
   Route.put('company/profile', 'CompaniesController.updateCompanyProfile')
   Route.get('company/posts', 'CompaniesController.searchCompanyPosts')
   Route.get('company/posts/:postUuid', 'PostsController.getPostForCompany')
+  Route.get('company/details/:companyUuid', 'CompaniesController.getCompanyDetails')
 }).middleware('auth')

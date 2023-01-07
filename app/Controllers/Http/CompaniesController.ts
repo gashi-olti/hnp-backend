@@ -18,4 +18,9 @@ export default class CompaniesController {
     const queryParams = ctx.request.qs()
     return companiesService.searchCompanyPosts(ctx.auth, queryParams)
   }
+
+  public async getCompanyDetails(ctx: HttpContextContract) {
+    const companyUuid = ctx.request.param('companyUuid')
+    return companiesService.getCompanyDetails(companyUuid)
+  }
 }
